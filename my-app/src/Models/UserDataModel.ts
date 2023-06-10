@@ -5,14 +5,28 @@ export class UserDataModel{
     email : string;
     dateOfBirth : Date;
     username : string;
-    userVerified: boolean;
-    constructor(name:string, lastname:string, address:string, email:string, dateOfBirth:Date, username:string, userVerified:boolean){
+    accountStatus: number = 0;
+    accountStatusString: string = "";
+    imageUrl:string;
+    constructor(name:string, lastname:string, address:string, email:string, dateOfBirth:Date, username:string, accountStatus:number, imageUrl:string){
         this.name = name;
         this.lastname = lastname;
         this.address = address;
-        this.userVerified = userVerified;
         this.email = email;
         this.dateOfBirth = dateOfBirth;
         this.username = username;
+        this.accountStatus = accountStatus;
+        this.imageUrl = imageUrl;
+        if(this.accountStatus == 0){
+            this.accountStatusString = "New";
+        }
+        else if(this.accountStatus == 1){
+            this.accountStatusString = "Verified";
+        }
+        else if(this.accountStatus == 2){
+            this.accountStatusString = "Blocked";
+        }
     }
+
+    
 }

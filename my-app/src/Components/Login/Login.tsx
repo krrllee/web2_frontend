@@ -2,25 +2,46 @@ import {useState} from "react"
 import { LoginModel } from "../../Models/LoginModel";
 import { login } from "../../Services/LoginService";
 import {toast, Toaster} from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import { ProductModel } from "../../Models/ProductModel";
 
 
 export default function () {
+  const navigate = useNavigate();
+  const token =  localStorage.getItem("userToken");
+  if(token != null){
+    if(token != ''){
+      navigate("../dashboard");
+    }
+  }
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-
   const loginAction = ()=>{
     
-    const loginModel:LoginModel = new LoginModel(email, password);
+    if(email != "" && password != ""){
 
-    login(loginModel)
-    .then(response =>{
-      localStorage.setItem("userToken", response.data.token)
-    })
-    .catch(error => {
-      toast.error(error.response.data);
-    })
-  
+      const loginModel:LoginModel = new LoginModel(email, password);
+      const cart: ProductModel[] = [];
+
+      login(loginModel)
+      .then(response =>{
+        localStorage.setItem("userToken", response.data)
+        localStorage.setItem("email", email);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        localStorage.setItem("imageUrl", response.data.imageUrl);
+        console.log(response);
+        navigate("../dashboard");
+        window.location.reload();
+      })
+      .catch(error => {
+        window.location.reload();
+        toast.error(error);
+      })
+    }
+    else{
+      toast.error("Please input email and password");
+    }
   }
   return (
     <div>
