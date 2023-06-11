@@ -31,8 +31,8 @@ const MyOrdersMerchant = () => {
     useEffect(() => {
         const getNewOrders = async() =>{
             const response = await getNewOrdersMerchant(user!)
+            console.log(response.data);
             setNewOrders(response.data);
-            console.log(new Date(response.data[0].endTime).getTime() - Date.now());
            
         }
         getNewOrders();
@@ -42,6 +42,8 @@ const MyOrdersMerchant = () => {
     useEffect(() => {
         const getAllOrders = async() =>{
             const response = await getAllOrdersMerchant(user!)
+            console.log(response.data);
+
             setAllOrders(response.data);
         }
         getAllOrders();
@@ -70,7 +72,7 @@ const MyOrdersMerchant = () => {
       );
 
     return (
-        <main className="container">
+        <div className="container">
         <Accordion>
          <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
@@ -125,7 +127,7 @@ const MyOrdersMerchant = () => {
         </AccordionDetails>
         </Accordion>
     </Container>
-    </main>    
+    </div>    
     )
 }
 export default MyOrdersMerchant;

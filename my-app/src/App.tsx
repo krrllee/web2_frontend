@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Outlet, Route, Routes, useNavigate } from 'react-router-dom';
 import Login from './Components/Login/Login';
 import Register from './Components/Register/Register';
 import "bootstrap/dist/css/bootstrap.min.css"
@@ -17,8 +17,20 @@ import MyProducts from './Components/Dashboard/Merchant/MyProducts';
 import MyOrdersShopper from './Components/Dashboard/Shopper/MyOrdersShopper';
 import jwt from 'jwt-decode';
 import MyOrdersMerchant from './Components/Dashboard/Merchant/MyOrdersMerchant';
+import axios from 'axios';
 function App() {
 
+    const navigate = useNavigate();
+    axios.interceptors.response.use(response => {
+      return response;
+    }, error => {
+    if (error.response.status === 401) {
+      localStorage.clear();
+      navigate("../../login");
+    }
+    return error;
+  });
+  
 
   const DashboardLayout = () => (
     <>

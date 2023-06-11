@@ -8,6 +8,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { useNavigate } from 'react-router-dom';
 import { Button, CardHeader, Typography } from "@mui/material";
+import { Toaster, toast }  from "react-hot-toast";
 
 const AllProducts = () => {
     const navigate = useNavigate();
@@ -44,17 +45,19 @@ const AllProducts = () => {
             if(allProducts[i].id == productId){
                 for(let j = 0; j < orderQuantity; j++){
                     cart.push(allProducts[i]);
+                    toast.success(allProducts[i].name + " added to cart");
                 }
             }
         }
         localStorage.setItem("cart", JSON.stringify(cart));
-        console.log(cart);
-        
     }
 
 
 
     return(
+        <div className="container">
+            <div><Toaster/></div>
+
         <Container>
         <Row>
             {products.map((products, k) => (
@@ -79,8 +82,8 @@ const AllProducts = () => {
                                 Price: {products['price']}
                             </Typography>
                             <CardActions disableSpacing>
-                            <input  style={{width: "50px"}} min={0} max={products['quantity']} id={"orderQuantity_" + products['id']} type="number" placeholder="0"/>
-                            <Button variant="outlined" color="secondary" type="submit"  onClick={() => { addToCartAction(products['id'], (document.getElementById("orderQuantity_"+products['id']) as HTMLInputElement).valueAsNumber )} }>Add to cart</Button>
+                            <Button style={{width: "120px", marginLeft:"40px"}} variant="outlined" size="small" color="secondary" type="submit" onClick={() => { addToCartAction(products['id'], (document.getElementById("orderQuantity_"+products['id']) as HTMLInputElement).valueAsNumber )} }>Add to cart</Button>
+                            <input  style={{width: "50px", marginLeft:"10px"}} min={0} max={products['quantity']} id={"orderQuantity_" + products['id']} type="number" placeholder="0"/>
                             </CardActions>    
                         </CardContent>
                     </Card>
@@ -88,6 +91,8 @@ const AllProducts = () => {
             ))}
         </Row>
     </Container>
+    </div>
+
     )
 }
 

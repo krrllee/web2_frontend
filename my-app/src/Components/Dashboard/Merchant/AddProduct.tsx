@@ -26,7 +26,7 @@ export default function(){
             .then(data =>{
                 if(data.status === 204){
                     toast.success("Successfully added ".concat(name));
-                }
+                    (document.getElementById('addProductClass') as HTMLFormElement).reset();                }
             })
             .catch(error =>{
                 toast.error("Something went wrong, please try again.");
@@ -38,7 +38,7 @@ export default function(){
     return (
          <div className="Login-form-container-no-bg">
             <div><Toaster/></div>
-            <form className="Login-form">
+            <form className="Login-form" id="addProductClass">
                 <div className="Login-form-content">
                 <div className="form-group mt-3">
                     <label>Name</label>

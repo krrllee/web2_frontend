@@ -38,7 +38,9 @@ export default function(){
             const response = await GetUserData(loggedInEmail);
             setName(response.data.name);
             setUsername(response.data.username);
-            setDateOfBirth(response.data.dateOfBirth.slice(0, 10));
+            if(response.data.dateOfBirth != undefined){
+                setDateOfBirth(response.data.dateOfBirth.slice(0, 10));
+            }
             setLastname(response.data.lastname);
             setEmail(response.data.email);
             setAddress(response.data.address);

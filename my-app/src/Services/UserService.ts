@@ -6,7 +6,6 @@ export async function uploadImage(image:any, email:string){
     var formData = new FormData();
     const userToken = localStorage.getItem("userToken");
     formData.append("image", image);
-    console.log(userToken);
     return await axios.post(process.env.REACT_APP_API_URL + '/api/users/uploadImage', formData, {params: {"email": email},headers: {"Authorization" : 'Bearer ' + userToken} });
 
 }
