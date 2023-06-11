@@ -30,7 +30,7 @@ export default function(){
 
     const confirmOrderAction = () => {
         const allProducts:ProductModel[] = JSON.parse(orderedProducts!) as ProductModel[];
-        let orderModel:OrderModel = new OrderModel("", user!, address, allProducts);
+        let orderModel:OrderModel = new OrderModel("", user!, address, allProducts, new Date());
         console.log(orderModel);
 
         confirmOrder(orderModel)

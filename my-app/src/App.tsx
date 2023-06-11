@@ -16,6 +16,7 @@ import CurrentOrder from './Components/Dashboard/Shopper/CurrentOrder';
 import MyProducts from './Components/Dashboard/Merchant/MyProducts';
 import MyOrdersShopper from './Components/Dashboard/Shopper/MyOrdersShopper';
 import jwt from 'jwt-decode';
+import MyOrdersMerchant from './Components/Dashboard/Merchant/MyOrdersMerchant';
 function App() {
 
 
@@ -44,6 +45,7 @@ function App() {
           <Route path="/dashboard/updateAccount" element ={<UpdateAccount/>}/>
           <Route path="/dashboard/addProduct" element ={<AddProduct/>}/>
           <Route path="/dashboard/myProducts" element ={<MyProducts/>}/>
+          <Route path="/dashboard/myOrders" element ={<MyOrdersMerchant/>}/>
         </Route>
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />

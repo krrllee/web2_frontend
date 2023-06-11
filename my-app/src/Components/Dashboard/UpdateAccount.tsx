@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
-import { GetUserData } from "../../Services/UserService"
+import { GetUserData, UpdateAccount } from "../../Services/UserService"
 import { useNavigate } from 'react-router-dom';
+import { UserDataModel } from "../../Models/UserDataModel";
 
 export default function(){
     
@@ -15,7 +16,20 @@ export default function(){
     const [lastname, setLastname] = useState("")
     const [address, setAddress] = useState("")
     const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+
+    const updateAccount = () => {
+        const userToUpdate:UserDataModel = new UserDataModel(name, lastname, address, email, new Date(dateOfBirth), username, 0, "");
+
+        UpdateAccount(userToUpdate).then(response=>{
+            setName(response.data.name);
+            setUsername(response.data.username);
+            setDateOfBirth(response.data.dateOfBirth.slice(0, 10));
+            setLastname(response.data.lastname);
+            setEmail(response.data.email);
+            setAddress(response.data.address);
+
+        })
+    }
 
     const loggedInEmail = localStorage.getItem("email");
     if(loggedInEmail != undefined){
@@ -27,13 +41,15 @@ export default function(){
             setDateOfBirth(response.data.dateOfBirth.slice(0, 10));
             setLastname(response.data.lastname);
             setEmail(response.data.email);
-            setPassword(response.data.password);
             setAddress(response.data.address);
         }
         getUserData();
 
 
     }, []);
+
+   
+
 }
     return (
         <div className="Login-form-container-no-bg">
@@ -45,6 +61,7 @@ export default function(){
                     id='email'
                     name='email'
                     type="email"
+                    
                     className="form-control mt-1"
                     placeholder="Enter email"
                     value={email}
@@ -58,6 +75,7 @@ export default function(){
                     id='username'
                     name='username'
                     type="text"
+                    
                     className="form-control mt-1"
                     placeholder="Username"
                     value={username}
@@ -70,6 +88,7 @@ export default function(){
                     id='name'
                     name='name'
                     type="text"
+                    
                     className="form-control mt-1"
                     placeholder="Your name"
                     value={name}
@@ -82,6 +101,7 @@ export default function(){
                     id='lastname'
                     name='lastname'
                     type="text"
+                    
                     className="form-control mt-1"
                     placeholder="Your last name"
                     value={lastname}
@@ -94,21 +114,10 @@ export default function(){
                     id='dateOfBirth'
                     name='dateOfBirth'
                     type="date"
+                    
                     className="form-control mt-1"
                     value={dateOfBirth}
                     onChange={(e)=>{setDateOfBirth(e.target.value)}}
-                    />
-                </div>
-                <div className="form-group mt-3">
-                    <label>Password</label>
-                    <input
-                    id='password'
-                    name='password'
-                    type="password"
-                    className="form-control mt-1"
-                    placeholder="Enter password"
-                    value={password}
-                    onChange={(e)=>{setPassword(e.target.value)}}
                     />
                 </div>
                 <div className="form-group mt-3">
@@ -117,6 +126,7 @@ export default function(){
                     id='address'
                     name='address'
                     type="text"
+                    
                     className="form-control mt-1"
                     placeholder="Address"
                     value={address}
@@ -124,8 +134,9 @@ export default function(){
                     />
                 </div>
                 <div className="d-grid gap-2 mt-3">
-                    <button type="button" className="btn btn-primary" >
-                    Submit
+                    <button type="button" className="btn btn-primary" onClick={() => updateAccount()} >
+                        
+                    Update
                     </button>
                 </div>
                 </div>

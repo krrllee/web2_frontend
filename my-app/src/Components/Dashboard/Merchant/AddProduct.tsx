@@ -36,7 +36,7 @@ export default function(){
         
     }
     return (
-         <div>
+         <div className="Login-form-container-no-bg">
             <div><Toaster/></div>
             <form className="Login-form">
                 <div className="Login-form-content">

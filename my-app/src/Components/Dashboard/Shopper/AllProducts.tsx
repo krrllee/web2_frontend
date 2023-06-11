@@ -19,10 +19,18 @@ const AllProducts = () => {
 
     useEffect(() => {
         const getProducts = async() =>{
-            const response = await GetProducts()
-            setProducts(response.data);
+                await GetProducts().then(response => {
+                setProducts(response.data);
+
+            }).catch(error =>
+                {
+                if(error.response.status == 401){
+                    localStorage.clear();
+                    navigate("../login");
+                }
+            });
         }
-        getProducts();
+        getProducts()
     }, []);
     
     function addToCartAction(productId:string, orderQuantity:number) {

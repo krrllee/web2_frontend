@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { UserDataModel } from '../Models/UserDataModel';
 
 
 export async function uploadImage(image:any, email:string){
@@ -35,3 +36,10 @@ export async function VerifyMerchant(merchantId:string){
     const userToken = localStorage.getItem("userToken");
     return await axios.post(process.env.REACT_APP_API_URL + '/api/users/verifyMerchant?merchantId=' + merchantId, {}, { headers: {"Authorization" : 'Bearer ' + userToken} });
 }
+
+export async function UpdateAccount(user: UserDataModel){
+    const userToken = localStorage.getItem("userToken");
+    return await axios.post(process.env.REACT_APP_API_URL + '/api/users/updateAccount', user, { headers: {"Authorization" : 'Bearer ' + userToken} });
+
+}
+

@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { GetUserData, uploadImage } from '../../Services/UserService';
 import { IconButton, Typography } from '@mui/material';
+import {toast, Toaster} from 'react-hot-toast';
 
 export default function GenerateSidebar(){
 
@@ -42,19 +43,38 @@ export default function GenerateSidebar(){
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
-          uploadImage(e.target.files[0], loggedInEmail!);
+          uploadImage(e.target.files[0], loggedInEmail!).then(response=>{
+            toast.success("Image updated!");
+            setImageUrl(response.data);
+          });
         }
       };
 
     if(decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] == "merchant"){
         return (
             <div className='sidebar'>
+            <div><Toaster/></div>
             <Sidebar>
+                <div className="SideCont">
+                    <div className="overlay">
+                        <input accept="image/*" id="icon-button-file" type="file" onChange={handleFileChange}/>
+                    </div>
+                <label htmlFor="icon-button-file">
+                <IconButton color="primary" component="span">
+                <Avatar alt={name} src={process.env.REACT_APP_API_URL+'/'+imageUrl} sx={{ width: 150, height: 150 }}/>
+                </IconButton>
+            </label>           
+            </div>
+            <div className='Side'>
+            <Typography>
+                Welcome {name}
+                </Typography>
+                </div>
             <Menu >
-                <MenuItem>MERCHANT PORTAL</MenuItem>
                 <MenuItem icon={<AddIcon/>} component={<Link to="/dashboard/addProduct" />}>Add new products</MenuItem>
-                <MenuItem icon={<AddShoppingCartIcon/>}  component={<Link to="/dashboard/myProducts" />}>MyProducts</MenuItem>
+                <MenuItem icon={<AddShoppingCartIcon/>}  component={<Link to="/dashboard/myProducts" />}>My products</MenuItem>
                 <MenuItem icon={<AccountCircleIcon/>} component={<Link to="/dashboard/updateAccount" />}>Account</MenuItem>
+                <MenuItem icon={<DeliveryDiningIcon/>} component={<Link to="/dashboard/myOrders" />}>My orders</MenuItem>
                 <MenuItem icon={<LogoutIcon/>} onClick={() => logout()}>Log out</MenuItem>
             </Menu>
             </Sidebar>
@@ -64,7 +84,23 @@ export default function GenerateSidebar(){
     else if(decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] == "shopper"){
         return (
             <div className='sidebar'>
+            <div><Toaster/></div>
             <Sidebar>
+                <div className="SideCont">
+                    <div className="overlay">
+                        <input accept="image/*" id="icon-button-file" type="file" onChange={handleFileChange}/>
+                    </div>
+                <label htmlFor="icon-button-file">
+                <IconButton color="primary" component="span">
+                <Avatar alt={name} src={process.env.REACT_APP_API_URL+'/'+imageUrl} sx={{ width: 150, height: 150 }}/>
+                </IconButton>
+            </label>           
+            </div>
+            <div className='Side'>
+            <Typography>
+                Welcome {name}
+                </Typography>
+                </div>
             <Menu>
                 <MenuItem icon={<InventoryIcon/>} component={<Link to="/dashboard/allProducts" />}>All products</MenuItem>
                 <MenuItem icon={<ShoppingCartIcon/>} component={<Link to="/dashboard/currentOrder" />}>Cart</MenuItem>
@@ -80,6 +116,7 @@ export default function GenerateSidebar(){
         console.log(imageUrl);
         return (
             <div className='sidebar'>
+            <div><Toaster/></div>
             <Sidebar>
                 <div className="SideCont">
                     <div className="overlay">

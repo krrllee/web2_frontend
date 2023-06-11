@@ -26,13 +26,18 @@ export default function () {
 
       login(loginModel)
       .then(response =>{
-        localStorage.setItem("userToken", response.data)
-        localStorage.setItem("email", email);
-        localStorage.setItem("cart", JSON.stringify(cart));
-        localStorage.setItem("imageUrl", response.data.imageUrl);
-        console.log(response);
-        navigate("../dashboard");
-        window.location.reload();
+        if(response.data == "User not verified"){
+          toast.error("User not verified");
+        }
+        else{
+          localStorage.setItem("userToken", response.data)
+          localStorage.setItem("email", email);
+          localStorage.setItem("cart", JSON.stringify(cart));
+          localStorage.setItem("imageUrl", response.data.imageUrl);
+          console.log(response);
+          navigate("../dashboard");
+          window.location.reload();
+        }
       })
       .catch(error => {
         window.location.reload();

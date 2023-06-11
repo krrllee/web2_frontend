@@ -20,3 +20,13 @@ export async function getNonCanceledOrdersShopper(email:string){
     const userToken = localStorage.getItem("userToken");
     return await axios.get(process.env.REACT_APP_API_URL+'/api/order/getNonCanceledOrders', {params : {email: email},  headers: {"Authorization" : `Bearer ${userToken}`}});
 }
+
+export async function getNewOrdersMerchant(email:string){
+    const userToken = localStorage.getItem("userToken");
+    return await axios.get(process.env.REACT_APP_API_URL+'/api/order/getNewOrdersMerchant', {params : {email: email},  headers: {"Authorization" : `Bearer ${userToken}`}});
+}
+
+export async function getAllOrdersMerchant(email:string){
+    const userToken = localStorage.getItem("userToken");
+    return await axios.get(process.env.REACT_APP_API_URL+'/api/order/getAllOrdersMerchant', {params : {email: email},  headers: {"Authorization" : `Bearer ${userToken}`}});
+}
